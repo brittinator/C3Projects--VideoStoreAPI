@@ -52,8 +52,7 @@ describe('movie controller', function() {
 
   describe("GET /:title", function() {
     var title = "Alien";
-    var uri = '/movies/' + title;
-
+    var uri = "/movies/" + title;
     it('responds with json format', function(done) {
       agent.get(uri).set('Accept', 'application/json')
         .expect('Content-Type', /json/)
@@ -63,11 +62,12 @@ describe('movie controller', function() {
       })
     })
 
-    it('responds with 1 movie result', function(done) {
+    it('responds with 1 movie result titled Alien', function(done) {
       agent.get(uri).set('Accept', 'application/json')
         .expect(200, function(error, result) {
           assert.equal(error, undefined);
-          assert.equal(result.body.length, 1);
+          assert.equal(result.body.data.movieInfo.title, title);
+
           done();
         })
     })
@@ -83,7 +83,7 @@ describe('movie controller', function() {
 
       agent.get(uri).set('Accept', 'application/json')
         .expect(200, function(error, result) {
-          assert.deepEqual(Object.keys(result.body[0]), movie_keys);
+          assert.deepEqual(Object.keys(result.body.data.movieInfo).sort(), movie_keys.sort());
           done();
         })
     })

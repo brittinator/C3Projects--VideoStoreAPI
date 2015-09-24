@@ -46,11 +46,17 @@ Movie.prototype.movieInfo = function(error, data) {
 
 }
 
-Movie.prototype.addMetadata = function(data) {
+Movie.prototype.addPageMetadata = function(data) {
   var results = { meta: {} };
-  results.meta.yourQuery = ourWebsite + "/movies/" + title;
-  results.meta.previousPage =  ;
-  results.meta.nextPage =  ;
+  // results.meta.yourQuery = ourWebsite + "/movies/" + title;
+  if (page >= 1 && totalResults > 10 * page)
+    results.meta.nextPage = results.meta.yourQuery + "/" + (page + 1);
+  if (page >= 2)
+    results.meta.prevPage = results.meta.yourQuery + "/" + (page - 1);
+  if (page != 1)
+  //   results.meta.yourQuery += "/" + page;
+  // results.meta.previousPage =  ;
+  // results.meta.nextPage =  ;
 }
 
 module.exports = Movie;

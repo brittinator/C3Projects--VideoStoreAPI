@@ -4,10 +4,12 @@ var express = require('express');
 var router = express.Router();
 var movieController = require("../controllers/movies_controller");
 
+// GET all movies
+router.get('/all', movieController.all);
+router.get('/all/:page', movieController.all);
+
 // GET a single movie profile
-router.get('/:title', function(req, res, next) {
-  return movieController.title(req, res);
-});
+router.get('/:title', movieController.title);
 
 // GET a list of customers that have rented movie title
 router.get('/:title/renting', function(req, res, next) {
@@ -16,25 +18,6 @@ router.get('/:title/renting', function(req, res, next) {
 
 // GET a list of customers that have rented title in the past,
 // sorted by customer_id || customer_name || check_out_date
-router.get('/:title/rented/sort_by=:query/:page', function(req, res, next) {
-  var sort = req.params.query;
-
-  switch (sort) {
-    case "customer_id":
-      return movieController.rentals_by_customer_id(req, res);
-      break;
-    case "customer_name":
-      return movieController.rentals_by_customer_name(req, res);
-      break;
-    case "check_out_date":
-      return movieController.rentals_by_check_out_date(req, res);
-      break;
-    default: // all
-      return movieController.all(req, res);
-      break;
-    }
-});
-
 router.get('/:title/rented/sort_by=:query', function(req, res, next) {
   var sort = req.params.query;
 
@@ -53,13 +36,23 @@ router.get('/:title/rented/sort_by=:query', function(req, res, next) {
       break;
     }
 });
+router.get('/:title/rented/sort_by=:query/:page', function(req, res, next) {
+  var sort = req.params.query;
 
-// GET all movies
-router.get('/all', function(req, res, next) {
-  return movieController.all(req, res);
-});
-router.get('/all/:page', function(req, res, next) {
-  return movieController.all(req, res);
+  switch (sort) {
+    case "customer_id":
+      return movieController.rentals_by_customer_id(req, res);
+      break;
+    case "customer_name":
+      return movieController.rentals_by_customer_name(req, res);
+      break;
+    case "check_out_date":
+      return movieController.rentals_by_check_out_date(req, res);
+      break;
+    default: // all
+      return movieController.all(req, res);
+      break;
+    }
 });
 
 // GET all movies sorted by release_date or title

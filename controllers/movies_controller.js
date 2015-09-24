@@ -20,7 +20,7 @@ var ourWebsite = require(helps + "url_base");
 var MoviesController = {};
 
 //--------- GET /all -----------------------------------------------------------
-MoviesController.all = function(request, response) {
+MoviesController.all = function(request, response, next) {
   var db = new sqlite3.Database("db/" + dbEnv + ".db");
   var movies = new movieTable();
 
@@ -90,7 +90,7 @@ MoviesController.all_by_release_date = function(request, response) {
 }
 
 //--------- GET /:title, aka Movie#show ----------------------------------------
-MoviesController.title = function(request, response) {
+MoviesController.title = function(request, response, next) {
   var db = new sqlite3.Database("db/" + dbEnv + ".db");
   var movies = new movieTable();
   var queried_title = request.params.title;
