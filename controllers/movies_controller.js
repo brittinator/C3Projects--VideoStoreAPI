@@ -142,6 +142,7 @@ MoviesController.rentals_by_customer_id =  function(request, response) {
 
 //--------- GET rentals of :title, sorted by customer_name ---------------------
 MoviesController.rentals_by_customer_name = function(request, response) {
+  console.log("WERE IN CUSTOMER NAME");
   var db = new sqlite3.Database("db/" + dbEnv + ".db");
   var movies = new movieTable();
   var title = request.params.title;
@@ -202,7 +203,7 @@ MoviesController.rentals_by_check_out_date = function(request, response) {
 }
 
 //--------- GET a list of customers who have rented :title ---------------------
-MoviesController.whos_renting = function(request, response) {
+MoviesController.whos_renting = function(request, response, next) {
   var db = new sqlite3.Database("db/" + dbEnv + ".db");
   var movies = new movieTable();
   var title = request.params.title;
