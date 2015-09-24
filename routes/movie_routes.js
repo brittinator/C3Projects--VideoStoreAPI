@@ -18,31 +18,13 @@ router.get('/:title/renting', movieController.whos_renting);
 // sorted by customer_id || customer_name || check_out_date
 router.get('/:title/rented/sort_by=:query', function(req, res, next) {
   var sorters = ['customer_id', 'customer_name', 'check_out_date'];
-  var sort = req.params.query;
+  var sort = 'rentals_by_' + req.params.query;  //"rentals_by_customer_id"
 
   if (sorters.indexOf(sort) != -1) {
-    //sort word is a real one and included in array
-    console.log("IT WORKS EUREKA");
-    var builder = "movieController." + sort;
-    console.log(builder);
-    return movieController.sort(req, res);
+    return movieController[sort](req, res);
   } else { return movieController.all(req, res); }
-
-  // switch (sort) {
-  //   case "customer_id":
-  //     return movieController.rentals_by_customer_id(req, res);
-  //     break;
-  //   case "customer_name":
-  //     return movieController.rentals_by_customer_name(req, res);
-  //     break;
-  //   case "check_out_date":
-  //     return movieController.rentals_by_check_out_date(req, res);
-  //     break;
-  //   default: // all
-  //     return movieController.all(req, res);
-  //     break;
-  //   }
 });
+
 router.get('/:title/rented/sort_by=:query/:page', function(req, res, next) {
   var sort = req.params.query;
 
