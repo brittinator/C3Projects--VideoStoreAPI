@@ -46,4 +46,11 @@ Movie.prototype.movieInfo = function(error, data) {
 
 }
 
+Movie.prototype.addMetadata = function(data) {
+  var results = { meta: {} };
+  results.meta.yourQuery = ourWebsite + "/movies/" + title;
+  results.meta.previousPage =  ;
+  results.meta.nextPage =  ;
+}
+
 module.exports = Movie;

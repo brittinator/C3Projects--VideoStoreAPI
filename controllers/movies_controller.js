@@ -102,7 +102,7 @@ MoviesController.title = function(request, response) {
   db.all(statement, function(error, data) {
     var results = movies.movieInfo(error, data);
     var status = results.data.status;
-    
+
     return response.status(status).json(results);
   });
 
